@@ -58,7 +58,6 @@ public class SplitNode {
         List<Node> enterNodes = createSplitNodes(node, incomingRelationships, indexProperty, index, Direction.INCOMING);
         List<Node> exitNodes = createSplitNodes(node, outgoingRelationships, indexProperty, index + enterNodes.size(), Direction.OUTGOING);
 
-        // TODO: можно созать сначала exit-ноды, а потом при создании enter-нод сразу создавать рёбра к exit-нодам
         for (Node enterNode : enterNodes) {
             Relationship relationship = Iterables.first(enterNode.getRelationships());
             for (Node exitNode : exitNodes) {
