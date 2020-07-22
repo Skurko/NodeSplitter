@@ -61,7 +61,7 @@ public class SplitNode {
         for (Node enterNode : enterNodes) {
             Relationship relationship = Iterables.first(enterNode.getRelationships());
             for (Node exitNode : exitNodes) {
-                createRelationship(exitNode, enterNode, relationship);
+                createRelationship(enterNode, exitNode, relationship);
             }
         }
         repairRelationships(enterNodes, exitNodes, ignoreIncomingRelationships, ignoreOutgoingRelationships);
