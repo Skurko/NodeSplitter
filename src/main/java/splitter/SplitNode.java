@@ -18,7 +18,7 @@ public class SplitNode {
     public GraphDatabaseService db;
 
     @Procedure(mode = Mode.WRITE)
-    @Description("Splits a single node into multiple nodes")
+    @Description("splitter.splitNodes([node1, node2]], {startIndex:0, indexProperty: 'Index', relationshipTypes: ['Type1', 'Type2']}) Split each node from list into multiple nodes based on relationships with specified types")
     public Stream<SplitNodeResult> splitNodes(@Name("nodes") List<Node> nodes, @Name("configuration") Map<String,Object> configuration) {
         SplitNodeConfiguration config = SplitNodeConfiguration.build(configuration);
         return nodes.stream().flatMap(node -> splitNode(node, config).stream()).filter(Objects::nonNull).map(SplitNodeResult::new);
