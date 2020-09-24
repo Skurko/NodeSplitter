@@ -6,10 +6,7 @@ import org.neo4j.procedure.*;
 import splitter.config.SplitNodeConfiguration;
 import splitter.results.SplitNodeResult;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,7 +23,7 @@ public class SplitNode {
 
     private List<Node> splitNode(Node node, SplitNodeConfiguration config) {
         if (node == null || node.getDegree() == 0)
-            return null;
+            return Collections.emptyList();
 
         Transaction tx = db.beginTx();
         tx.acquireWriteLock(node);
@@ -52,6 +49,9 @@ public class SplitNode {
                 ignoreOutgoingRelationships.add(relationship);
             }
         });
+
+        if (incomingRelationships.isEmpty() || outgoingRelationships.isEmpty())
+            return Collections.emptyList();
 
         String indexProperty = config.getIndexPropertyName();
         int index = config.getStartIndex();
